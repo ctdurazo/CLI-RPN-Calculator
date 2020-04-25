@@ -53,13 +53,13 @@ currently only supports the basic 4 operators plus 2 other common operators, mod
 Eventually implementing more operators could be useful. An alternate user interface would also be a good
 future addition.
 
-In version 1 this calculator used 2 methods to handle the possible user input styles, inline vs. single 
+In version 1, this calculator used 2 methods to handle the possible user input styles, inline vs. single 
 value input. This was updated to combine the calculator() and the 
 inline_calculator() methods, since both methods did most of the same work. By combining these into
 a single method, I was able to minimize the changes needed to make an update such as adding new 
-operators. Along with this I made the operators logic its own method to make it a little bit easier and
-readable. While adding this get_operators method, I also implemented a couple new common operators, 
-modulus, and exponents. This change should also make it easier to change the user interface in the future. 
+operators. Along with this I made the operators logic its own method to make it a little bit more easily
+readable. While adding this get_operators() method, I also implemented a couple new common operators, 
+modulus and exponents. This change should also make it easier to change the user interface in the future. 
 For instance, instead of passing in an input_list to the inline_calculator method, one could now pass in 
 any string representation, whether that is from a file, a websocket, etc.
 

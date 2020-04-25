@@ -1,86 +1,60 @@
 def main():
-    calculator()
-
-
-def calculator():
     nums = []
     try:
-        user_input = input("> ")
-        while str(user_input) != "q":
-            try:
-                val = int(user_input)
-                nums.append(val)
-                print(val)
-            except ValueError:
-                try:
-                    val = float(user_input)
-                    nums.append(val)
-                    print(val)
-                except ValueError:
-                    if str(user_input) == "+" and len(nums) > 1:
-                        b = nums.pop()
-                        a = nums.pop()
-                        out = a + b
-                    elif str(user_input) == "-" and len(nums) > 1:
-                        b = nums.pop()
-                        a = nums.pop()
-                        out = a - b
-                    elif str(user_input) == "*" and len(nums) > 1:
-                        b = nums.pop()
-                        a = nums.pop()
-                        out = a * b
-                    elif str(user_input) == "/" and len(nums) > 1:
-                        b = nums.pop()
-                        a = nums.pop()
-                        out = a / b
-                    elif str(user_input) == "q":
-                        raise EOFError
-                    else:
-                        out = inline_calculator(list(user_input.split(" ")), nums)
-                    if out is not None:
-                        nums.append(out)
-                        print(out)
-                    else:
-                        print(nums[-1])
+        while True:
             user_input = input("> ")
+            calculator(user_input, nums)
+            print(nums[-1])
     except EOFError:
         pass
 
 
-def inline_calculator(input_list, nums):
-    out = None
+def calculator(input_string, nums):
+    input_list = list(input_string.split())
     for user_input in input_list:
         try:
             val = int(user_input)
             nums.append(val)
-        except ValueError:
+        except ValueError:  # user_input not an integer, try float
             try:
                 val = float(user_input)
                 nums.append(val)
-            except ValueError:
-                if str(user_input) == "+" and len(nums) > 1:
-                    b = nums.pop()
-                    a = nums.pop()
-                    out = a + b
-                elif str(user_input) == "-" and len(nums) > 1:
-                    b = nums.pop()
-                    a = nums.pop()
-                    out = a - b
-                elif str(user_input) == "*" and len(nums) > 1:
-                    b = nums.pop()
-                    a = nums.pop()
-                    out = a * b
-                elif str(user_input) == "/" and len(nums) > 1:
-                    b = nums.pop()
-                    a = nums.pop()
-                    out = a / b
-                elif str(user_input) == "q":
-                    raise EOFError
-                else:
-                    print("invalid input try again")
-                if out is not None:
-                    nums.append(out)
-    return out
+            except ValueError:  # user_input not an float, try operator
+                get_operator(user_input, nums)
+
+
+def get_operator(user_input, nums):
+    if str(user_input) == "+" and len(nums) > 1:
+        b = nums.pop()
+        a = nums.pop()
+        out = a + b
+    elif str(user_input) == "-" and len(nums) > 1:
+        b = nums.pop()
+        a = nums.pop()
+        out = a - b
+    elif str(user_input) == "*" and len(nums) > 1:
+        b = nums.pop()
+        a = nums.pop()
+        out = a * b
+    elif str(user_input) == "/" and len(nums) > 1:
+        b = nums.pop()
+        a = nums.pop()
+        out = a / b
+    elif str(user_input) == "%" and len(nums) > 1:
+        b = nums.pop()
+        a = nums.pop()
+        out = a % b
+    elif str(user_input) == "^" and len(nums) > 1:
+        b = nums.pop()
+        a = nums.pop()
+        out = a**b
+    elif str(user_input) == "q":
+        raise EOFError
+    else:
+        print("invalid input try again")
+        out = None
+    if out is not None:
+        nums.append(out)
 
 
 if __name__ == "__main__":

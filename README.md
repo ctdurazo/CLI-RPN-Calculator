@@ -1,22 +1,40 @@
 # CLI-RPN-Calculator
 
-## Implementation of a command-line reverse polish notation (RPN) calculator in Python3.
-
-1. The calculator uses standard input and standard output
-2. The calculator implements the four standard arithmetic operators ( +, -, *, /), as
+## Implementation of a command-line Reverse Polish Notation (RPN) calculator in Python3.
+1. The calculator uses standard input and standard output.
+2. The calculator implements the four standard arithmetic operators (+, -, *, /), as
 well as modulus(%) and exponents(^).
 3. The calculator handles errors and recovers upon invalid input by printing 
-"invalid input try again" along with the value of the number at the top of the stack
+"invalid input try again" along with the value of the number at the top of the stack.
 4. The calculator exits when it receives a "q" command or an end of input indicator
- (EOF / Ctrl+D)
+ (EOF / Ctrl+D).
+ 
+## Use
+1. CLI version
 
+    In your terminal/command-line run `python3 rpn.py`.
+    
+    This will open up the CLI version directly in your current terminal, where you can
+paste or type in your equations. There are some examples of inputs and outputs for this
+version below.
+    
+2. GUI version
+
+    To run the GUI version you must first install Kivy. I did this using a python virtual 
+environment and pip. To create the virtual environment run `python3 -m venv venv` in 
+your terminal/command-line from the project folder. Then you can run `sh frontend.sh`.
+    
+    This will open a calculator window where you can paste or type in your equations to 
+the output area, or use the buttons to input your equation. In order for the equations
+to register correctly, remember to use the space button between each input.
+    
 ### Implementation Details
-The calculator is implemented using a stack. As numbers are input, they are pushed 
-onto the top of the stack. When an arithmetic operator is input, the last 2 numbers 
+The calculator is implemented using a stack. As numbers are entered, they are pushed 
+onto the top of the stack. When an arithmetic operator is entered, the last 2 numbers
 added to the stack are used to complete that operation and the result is pushed back
 on top of the stack. In the event of a string representation of a calculation in RPN
-is input, the string is split on any whitespace, then each element in the 
-resulting list is used just as above(numbers pushed to the stack, operators calculated
+is entered, the string is split on any whitespace, then each element in the 
+resulting list is used just as above (numbers pushed to the stack, operators calculated,
 then the result pushed to the stack).
 
 Ex: `> 5 5 5 8 + + -`
@@ -36,12 +54,13 @@ The implementation is broken into 2 methods:
 1. calculator(String, List)
 
     This method takes in a String, splits it into a list delimited by whitespace, then checks 
-to see if each list item is a integer, float, operator, "q" or EOF. As explained above, any 
+to see if each list item is an integer, float, operator, "q" or EOF. As explained above, any 
 numbers, either integer or float, are added to the stack. In the case of an operator, it will
 call the get_operators method, which uses the last 2 numbers added to the stack to perform the 
 calculation. In the case of a "q" or EOF, the calculator will quit.
 
 2. get_operators(String, List)
+
     This method takes in a String that doesn't match either an integer, float, or "q" or EOF. 
 It then determines if it is one of the supported operators, or if it is an invalid input. In
 the case of a supported operator, it will pop the last 2 numbers that were added to the stack,
@@ -62,6 +81,19 @@ readable. While adding this get_operators() method, I also implemented a couple 
 modulus and exponents. This change should also make it easier to change the user interface in the future. 
 For instance, instead of passing in an input_list to the inline_calculator method, one could now pass in 
 any string representation, whether that is from a file, a websocket, etc.
+
+### Front-End Addition
+I have created an example front-end for this application using a Python GUI framework called Kivy. The design
+for this is loosely based off of the Calculator App built into iOS. This was the first app I have made using 
+the Kivy framework and I found it to be a pretty easy framework to get started with quickly. In order to use
+Kivy, you must first install it. I did this using a python virtual environment and pip. To create the virtual
+environment type `python3 -m venv venv` in the terminal from the project folder. From here you can run 
+`sh frontend.sh`, which will install Kivy and start the calculator application, or you can run the following 
+to install Kivy using pip:
+```
+source venv/bin/activate
+pip install -r requirements.txt
+```
 
 ### Example Input/Output
 5 + 8 = 13

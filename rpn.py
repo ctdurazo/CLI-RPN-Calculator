@@ -2,9 +2,13 @@ def main():
     nums = []
     try:
         while True:
-            user_input = input("> ")
-            calculator(user_input, nums)
-            print(nums[-1])
+            try:
+                user_input = input("> ")
+                calculator(user_input, nums)
+                print(nums[-1])
+            except ZeroDivisionError:
+                print("Cannot divide by 0")
+                continue
     except EOFError:
         pass
 
@@ -17,7 +21,7 @@ def calculator(input_string, nums):
             nums.append(val)
         except ValueError:  # user_input not an integer, try float
             try:
-                val = float(user_input)
+                val = round(float(user_input), 5)
                 nums.append(val)
             except ValueError:  # user_input not an float, try operator
                 get_operator(user_input, nums)
@@ -38,8 +42,12 @@ def get_operator(user_input, nums):
         out = a * b
     elif str(user_input) == "/" and len(nums) > 1:
         b = nums.pop()
-        a = nums.pop()
-        out = a / b
+        if b != 0:
+            a = nums.pop()
+            out = round(a / b, 5)
+        else:
+            nums.append(b)
+            raise ZeroDivisionError
     elif str(user_input) == "%" and len(nums) > 1:
         b = nums.pop()
         a = nums.pop()
